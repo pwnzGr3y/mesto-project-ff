@@ -2,6 +2,7 @@ import { createCard } from '../components/card'
 import { initialCards } from '../components/cards'
 import { closePopup, openPopup, setModalWindowEventListeners } from '../components/modal'
 import '../pages/index.css'
+import {enableValidation, clearValidation} from './validation.js';
 
 const formEditProfile = document.querySelector('[name="edit-profile"]')
 const nameInput = formEditProfile.querySelector('.popup__input_type_name')
@@ -94,3 +95,40 @@ function deleteCard(delButton) {
   const listItem = delButton.closest('.card')
   listItem.remove()
 }
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+
+function beforeChangeAvatarPopupOpened() {
+  avatarNewURLInput.value = 'https://';
+  clearValidation(changeAvatarForm, validationConfig);
+}
+
+function beforeNewCardPopupOpened() {
+  cardNameInput.value = '';
+  cardNewURLInput.value = 'https://';
+  clearValidation(addForm, validationConfig);
+}
+
+function beforeEditPopupOpened() {
+  nameInput.value = profileTitle.textContent;
+  descriptionInput.value = profileDescription.textContent;
+  clearValidation(formEditProfile, validationConfig);
+}
+
+popUps.forEach((ModalWidow) => {
+  setModalWindowEventListeners(ModalWidow);
+
+  const form = ModalWidow.querySelector(validationConfig.formSelector);
+  if (form) {
+    clearValidation(form, validationConfig);
+  };
+})
+
+enableValidation(validationConfig);
