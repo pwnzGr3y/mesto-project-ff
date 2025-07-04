@@ -2,7 +2,10 @@ import { createCard } from '../components/card'
 import { initialCards } from '../components/cards'
 import { closePopup, openPopup, setModalWindowEventListeners } from '../components/modal'
 import '../pages/index.css'
+
 import {enableValidation, clearValidation} from './validation.js';
+import {enableValidation, clearValidation} from './validation.js';
+
 
 const formEditProfile = document.querySelector('[name="edit-profile"]')
 const nameInput = formEditProfile.querySelector('.popup__input_type_name')

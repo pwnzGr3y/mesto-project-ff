@@ -7,6 +7,8 @@ function enableValidation(settings) {
   })
 };
 
+ы
+
 function setInputs(formElement, settings) {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector))
   const buttonElement = formElement.querySelector(settings.submitButtonSelector)
