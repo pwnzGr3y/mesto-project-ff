@@ -1,13 +1,11 @@
-/* Идентификатор нашей когорты:  wff-cohort-41
-Твой токен:  ef79f44c-8e47-4762-8710-738aafe78eb9 */
 export {
-  API_addOneMoreCard,
-  API_changeUserInfo,
-  API_deleteCard,
-  API_getCards,
-  API_getUsersMe,
-  API_setAvatar,
-  API_setLikeCard,
+  apiAddOneMoreCard,
+  apiChangeUserInfo,
+  apiDeleteCard,
+  apiGetCards,
+  apiGetUsersMe,
+  apiSetAvatar,
+  apiSetLikeCard,
   secretConfig,
 }
 
@@ -19,20 +17,6 @@ const secretConfig = {
   },
 }
 
-function API_getUsersMe(config) {
-  return fetch(`${config.cohortUrl}/users/me`, {
-    headers: config.headers,
-  })
-    .then(res => handleResponse(res))
-};
-
-function API_getCards(config) {
-  return fetch(`${config.cohortUrl}/cards`, {
-    headers: config.headers,
-  })
-    .then(res => handleResponse(res))
-};
-
 function handleResponse(res) {
   if (res.ok) {
     return res.json()
@@ -40,9 +24,21 @@ function handleResponse(res) {
   return res.json().then((errData) => {
     return Promise.reject(`Error ${res.status}: ${JSON.stringify(errData)}`)
   })
-};
+}
 
-function API_changeUserInfo(config, newName, newJob) {
+function apiGetUsersMe(config) {
+  return fetch(`${config.cohortUrl}/users/me`, {
+    headers: config.headers,
+  }).then(handleResponse)
+}
+
+function apiGetCards(config) {
+  return fetch(`${config.cohortUrl}/cards`, {
+    headers: config.headers,
+  }).then(handleResponse)
+}
+
+function apiChangeUserInfo(config, newName, newJob) {
   return fetch(`${config.cohortUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
@@ -50,11 +46,10 @@ function API_changeUserInfo(config, newName, newJob) {
       name: newName,
       about: newJob,
     }),
-  })
-    .then(res => handleResponse(res))
-};
+  }).then(handleResponse)
+}
 
-function API_addOneMoreCard(config, newName, newLink) {
+function apiAddOneMoreCard(config, newName, newLink) {
   return fetch(`${config.cohortUrl}/cards`, {
     method: 'POST',
     headers: config.headers,
@@ -62,31 +57,27 @@ function API_addOneMoreCard(config, newName, newLink) {
       name: newName,
       link: newLink,
     }),
-  })
-    .then(res => handleResponse(res))
-};
+  }).then(handleResponse)
+}
 
-function API_setLikeCard(config, card_id, isLiked) {
-  return fetch(`${config.cohortUrl}/cards/likes/${card_id}`, {
-    method: (isLiked) ? 'DELETE' : 'PUT',
+function apiSetLikeCard(config, cardId, isLiked) {
+  return fetch(`${config.cohortUrl}/cards/likes/${cardId}`, {
+    method: isLiked ? 'DELETE' : 'PUT',
     headers: config.headers,
-  })
-    .then(res => handleResponse(res))
-};
+  }).then(handleResponse)
+}
 
-function API_deleteCard(config, card_id) {
-  return fetch(`${config.cohortUrl}/cards/${card_id}`, {
+function apiDeleteCard(config, cardId) {
+  return fetch(`${config.cohortUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then(res => handleResponse(res))
-};
+  }).then(handleResponse)
+}
 
-function API_setAvatar(config, avatar_link) {
+function apiSetAvatar(config, avatarLink) {
   return fetch(`${config.cohortUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
-    body: JSON.stringify({ avatar: avatar_link }),
-  })
-    .then(res => handleResponse(res))
-};
+    body: JSON.stringify({ avatar: avatarLink }),
+  }).then(handleResponse)
+}

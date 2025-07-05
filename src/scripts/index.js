@@ -6,7 +6,6 @@ import {
   API_deleteCard,
   API_getCards,
   API_getUsersMe,
-  //   API_setLikeCard,
   API_setAvatar,
   secretConfig,
 } from './api.js'
@@ -58,13 +57,13 @@ const validationConfig = {
 }
 
 function beforeChangeAvatarPopupOpened() {
-  avatarNewURLInput.value = 'https://'
+  avatarNewURLInput.value = '' // исправлено: полностью очищаем поле
   clearValidation(changeAvatarForm, validationConfig)
 }
 
 function beforeNewCardPopupOpened() {
   cardNameInput.value = ''
-  cardNewURLInput.value = 'https://'
+  cardNewURLInput.value = ''
   clearValidation(addForm, validationConfig)
 }
 
@@ -96,17 +95,17 @@ function handleNewPlaceFormSubmit(event) {
   API_addOneMoreCard(secretConfig, newName, newLink)
     .then((newCardFromServer) => {
       renderCard({ cardObject: newCardFromServer }) // используем то, что вернул сервер
+      formNewPlace.reset() // сброс формы только при успехе
       closePopup(addPopup)
     })
     .catch((err) => {
       console.error('Ошибка при добавлении карточки:', err)
     })
-    .finally (() => {
-      formNewPlace.reset()
+    .finally(() => {
       submitButton.textContent = originalTextContent
       submitButton.disabled = false
     })
-};
+}
 
 function renderCard({ cardObject, canDelete = true, isLiked = false, method = 'prepend' }) {
   placesList[method](
@@ -114,7 +113,6 @@ function renderCard({ cardObject, canDelete = true, isLiked = false, method = 'p
       cardObject,
       deleteFunction: deleteCard,
       onCardClickFunction: openCardPopup,
-      // toggleLikeHandler,
       canDelete,
       isLiked,
     }),
@@ -125,7 +123,7 @@ function showProfile() {
   profileTitle.textContent = userMe.name
   profileDescription.textContent = userMe.about
   profileImage.style.backgroundImage = `url(${userMe.avatar})`
-};
+}
 
 function submitDeleteCard(event, cardElement, cardId) {
   event.preventDefault()
@@ -143,7 +141,7 @@ function submitDeleteCard(event, cardElement, cardId) {
     .catch((err) => {
       console.error('Ошибка при удалении карточки:', err)
     })
-    .finally (() => {
+    .finally(() => {
       submitButton.textContent = originalTextContent
       submitButton.disabled = false
     })
@@ -155,12 +153,8 @@ function deleteCard(delButton, cardId) {
   deleteCardForm.onsubmit = evt => submitDeleteCard(evt, cardElement, cardId)
 }
 
-// Дальше исполняемый  код
-
-// Читаем ждём два ответа и грузим данные из двух источников
 Promise.all([API_getUsersMe(secretConfig), API_getCards(secretConfig)])
   .then(([user, cardsArray]) => {
-    // копирую наружу -> public userMe
     userMe = user
     showProfile()
 
@@ -199,13 +193,13 @@ changeAvatarForm.addEventListener('submit', (event) => {
   API_setAvatar(secretConfig, newAvatarUrl)
     .then((updatedUser) => {
       profileImage.style.backgroundImage = `url(${updatedUser.avatar})`
+      changeAvatarForm.reset() // сброс формы только при успехе
       closePopup(changeAvatarPopup)
     })
     .catch((err) => {
       console.error('Ошибка при обновлении аватара:', err)
     })
-    .finally (() => {
-      changeAvatarForm.reset()
+    .finally(() => {
       submitButton.textContent = originalTextContent
       submitButton.disabled = false
     })
@@ -230,7 +224,7 @@ formEditProfile.addEventListener('submit', (event) => {
     .catch((err) => {
       console.error('Ошибка при обновлении профиля:', err)
     })
-    .finally (() => {
+    .finally(() => {
       submitButton.textContent = originalTextContent
       submitButton.disabled = false
     })
@@ -242,7 +236,7 @@ popUps.forEach((ModalWidow) => {
   const form = ModalWidow.querySelector(validationConfig.formSelector)
   if (form) {
     clearValidation(form, validationConfig)
-  };
+  }
 })
 
 enableValidation(validationConfig)
