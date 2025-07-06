@@ -2,7 +2,9 @@ export function setModalWindowEventListeners(modalWindow) {
   modalWindow.classList.add('popup_is-animated')
 
   const closeCross = modalWindow.querySelector('.popup__close')
-  closeCross.addEventListener('click', () => { closePopup(modalWindow) })
+  closeCross.addEventListener('click', () => {
+    closePopup(modalWindow)
+  })
 
   modalWindow.addEventListener('click', (event) => {
     if (!event.target.classList.contains('.popup__content')) {

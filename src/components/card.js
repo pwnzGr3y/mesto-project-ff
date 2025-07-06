@@ -1,5 +1,4 @@
-// Card.js
-import { secretConfig } from '../scripts/api.js'
+import { apiSetLikeCard, secretConfig } from '../scripts/api.js'
 
 const cardTemplate = document.querySelector('#card-template').content
 const elementForClone = cardTemplate.querySelector('.places__item')

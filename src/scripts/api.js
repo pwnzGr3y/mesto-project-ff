@@ -11,7 +11,7 @@ function handleResponse(res) {
     return res.json()
   }
   return res.json().then((errData) => {
-    return Promise.reject(`Error ${res.status}: ${JSON.stringify(errData)}`)
+    return Promise.reject(new Error(`Error ${res.status}: ${JSON.stringify(errData)}`))
   })
 }
 
