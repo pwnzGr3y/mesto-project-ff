@@ -1,3 +1,1 @@
-# Проектная работа Mesto 
-https://pwnzgr3y.github.io/mesto-project-ff/     
- 
+https://pwnzgr3y.github.io/mesto-project-ff/
