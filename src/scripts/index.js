@@ -1,14 +1,9 @@
 import { createCard } from '../components/card'
 import { closePopup, openPopup, setModalWindowEventListeners } from '../components/modal'
 import {
-  API_addOneMoreCard,
-  API_changeUserInfo,
-  API_deleteCard,
-  API_getCards,
-  API_getUsersMe,
-  API_setAvatar,
   secretConfig,
 } from './api.js'
+
 import { clearValidation, enableValidation } from './validation.js'
 import '../pages/index.css'
 

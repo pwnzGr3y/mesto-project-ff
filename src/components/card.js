@@ -1,5 +1,5 @@
 // Card.js
-import { API_setLikeCard, secretConfig } from '../scripts/api.js'
+import { secretConfig } from '../scripts/api.js'
 
 export { createCard }
 
@@ -7,7 +7,7 @@ const cardTemplate = document.querySelector('#card-template').content
 const elementForClone = cardTemplate.querySelector('.places__item')
 
 function likeCard({ likeButton, likeCountElement, cardId, isLiked }) {
-  API_setLikeCard(secretConfig, cardId, isLiked)
+  apiSetLikeCard(secretConfig, cardId, isLiked)
     .then((updatedCard) => {
       likeCountElement.textContent = updatedCard.likes.length
       likeButton.classList.toggle('card__like-button_is-active')
