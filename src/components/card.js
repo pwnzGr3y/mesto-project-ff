@@ -1,8 +1,6 @@
 // Card.js
 import { secretConfig } from '../scripts/api.js'
 
-export { createCard }
-
 const cardTemplate = document.querySelector('#card-template').content
 const elementForClone = cardTemplate.querySelector('.places__item')
 
@@ -63,3 +61,4 @@ function createCard({
 
   return cardElement
 }
+export { createCard }

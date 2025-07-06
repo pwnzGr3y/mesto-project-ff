@@ -1,6 +1,7 @@
 import { createCard } from '../components/card'
 import { closePopup, openPopup, setModalWindowEventListeners } from '../components/modal'
 import {
+  apiAddOneMoreCard,
   apiChangeUserInfo,
   apiDeleteCard,
   apiGetCards,

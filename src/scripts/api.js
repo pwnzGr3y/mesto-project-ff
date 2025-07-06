@@ -1,14 +1,3 @@
-export {
-  apiAddOneMoreCard,
-  apiChangeUserInfo,
-  apiDeleteCard,
-  apiGetCards,
-  apiGetUsersMe,
-  apiSetAvatar,
-  apiSetLikeCard,
-  secretConfig,
-}
-
 const secretConfig = {
   cohortUrl: 'https://mesto.nomoreparties.co/v1/wff-cohort-41',
   headers: {
@@ -80,4 +69,15 @@ function apiSetAvatar(config, avatarLink) {
     headers: config.headers,
     body: JSON.stringify({ avatar: avatarLink }),
   }).then(handleResponse)
+}
+
+export {
+  apiAddOneMoreCard,
+  apiChangeUserInfo,
+  apiDeleteCard,
+  apiGetCards,
+  apiGetUsersMe,
+  apiSetAvatar,
+  apiSetLikeCard,
+  secretConfig,
 }

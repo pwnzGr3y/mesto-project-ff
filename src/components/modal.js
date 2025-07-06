@@ -1,8 +1,3 @@
-export {
-  closePopup,
-  openPopup,
-}
-
 export function setModalWindowEventListeners(modalWindow) {
   modalWindow.classList.add('popup_is-animated')
 
@@ -35,4 +30,9 @@ function handleEscClose(event) {
     if (openedPopup)
       closePopup(openedPopup)
   }
+}
+
+export {
+  closePopup,
+  openPopup,
 }
