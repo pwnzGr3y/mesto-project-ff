@@ -1,6 +1,11 @@
 import { createCard } from '../components/card'
 import { closePopup, openPopup, setModalWindowEventListeners } from '../components/modal'
 import {
+  apiChangeUserInfo,
+  apiDeleteCard,
+  apiGetCards,
+  apiGetUsersMe,
+  apiSetAvatar,
   secretConfig,
 } from './api.js'
 
@@ -87,7 +92,7 @@ function handleNewPlaceFormSubmit(event) {
   submitButton.textContent = 'Сохранение...'
   submitButton.disabled = true
 
-  API_addOneMoreCard(secretConfig, newName, newLink)
+  apiAddOneMoreCard(secretConfig, newName, newLink)
     .then((newCardFromServer) => {
       renderCard({ cardObject: newCardFromServer }) // используем то, что вернул сервер
       formNewPlace.reset() // сброс формы только при успехе
@@ -128,7 +133,7 @@ function submitDeleteCard(event, cardElement, cardId) {
   submitButton.textContent = 'Удаление...'
   submitButton.disabled = true
 
-  API_deleteCard(secretConfig, cardId)
+  apiDeleteCard(secretConfig, cardId)
     .then(() => {
       cardElement.remove()
       closePopup(deleteCardPopup)
@@ -148,7 +153,7 @@ function deleteCard(delButton, cardId) {
   deleteCardForm.onsubmit = evt => submitDeleteCard(evt, cardElement, cardId)
 }
 
-Promise.all([API_getUsersMe(secretConfig), API_getCards(secretConfig)])
+Promise.all([apiGetUsersMe(secretConfig), apiGetCards(secretConfig)])
   .then(([user, cardsArray]) => {
     userMe = user
     showProfile()
@@ -185,7 +190,7 @@ changeAvatarForm.addEventListener('submit', (event) => {
   submitButton.textContent = 'Сохранение...'
   submitButton.disabled = true
 
-  API_setAvatar(secretConfig, newAvatarUrl)
+  apiSetAvatar(secretConfig, newAvatarUrl)
     .then((updatedUser) => {
       profileImage.style.backgroundImage = `url(${updatedUser.avatar})`
       changeAvatarForm.reset() // сброс формы только при успехе
@@ -210,7 +215,7 @@ formEditProfile.addEventListener('submit', (event) => {
   submitButton.textContent = 'Сохранение...'
   submitButton.disabled = true
 
-  API_changeUserInfo(secretConfig, newName, newJob)
+  apiChangeUserInfo(secretConfig, newName, newJob)
     .then((data) => {
       profileTitle.textContent = data.name
       profileDescription.textContent = data.about
